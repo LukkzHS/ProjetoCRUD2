@@ -1,0 +1,63 @@
+<html>
+  <head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+
+  <body style="background-color: rgba(201, 255, 5, 0.230);">
+    <div style="margin: 35px;text-align: center;font-weight: bold;">
+    <div class="mb-3">
+      <form th:action="@{/contatosParametro}">
+        <label class="form-label">Pesquise pelo NOME</label>
+        <input type="text" class="form-control" th:name="nome">
+        <button type="submit" class="btn btn-primary">Pesquisar</button>            
+      </form>
+    </div>
+  
+
+    <table class="table">
+      <thead>
+        <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Email</th>
+        <th scope="col">Telefone</th>
+        </tr>
+      </thead>
+      <tbody>
+         <tr th:each="contato : ${contatos}">
+          <td th:text="${contato.id}"></td>
+          <td th:text="${contato.nome}"></td>
+          <td th:text="${contato.email}"></td>
+          <td th:text="${contato.telefone}"></td>
+          <td><a th:href="@{'/editarContato?id=' + ${contato.id}}">Editar</a></td>
+          <td><a th:href="@{'/excluirContato?id=' + ${contato.id}}">Excluir</a></td>
+         </tr>
+      </tbody>
+      </table>
+    </div>
+
+      <div style="margin: 35px;">
+        <form method="POST" action="contatos" th:object="${contato}">
+          <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Nome</label>
+            <input type="text" class="form-control" th:field="*{nome}" name="nome" >
+          </div>
+          <div class="mb-3">
+            <label for="formGroupExampleInput2" class="form-label">Telefone</label>
+            <input type="text" class="form-control" th:field="*{telefone}" name="telefone" maxlength="11">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Endereço de Email</label>
+            <input type="email" th:field="*{email}" class="form-control" name="email" aria-describedby="emailHelp" >
+          </div>
+          <input type="hidden" th:field="*{id}" name="id" />
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </form>
+      </div>
+    
+  </body>
+  </html>
+
